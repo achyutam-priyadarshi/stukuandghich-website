@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback – The Lost Kid</title>
+
+  <style>
+    @font-face {
+      font-family: pixelify;
+      src: url(pixelify.ttf);
+    }
+
+    body {
+      margin: 0;
+      font-family: pixelify, sans-serif;
+      color: #e2e8f0;
+
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.epicgames.com%2Fue%2Fproduct%2FScreenshot%2FScreenshot19-1920x1080-810b476ed14a4555fd683c9bce63979e.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 30px;
+      background: rgba(30, 41, 59, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+      font-family: pixelify, sans-serif;
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    .send-btn {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      background: #38bdf8;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .send-btn:hover {
+      background: #0ea5e9;
+      transform: scale(1.02);
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Send Feedback</h1>
+
+```
+<input type="text" id="username" placeholder="Your name (optional)">
+<textarea id="feedback" placeholder="Write your feedback here..." required></textarea>
+
+<button class="send-btn" onclick="sendMail()">Send via Email</button>
+
+<p class="note">
+  This will open your email app. No login required.
+</p>
+```
+
+  </div>
+
+  <script>
+    function sendMail() {
+      const name = document.getElementById("username").value;
+      const feedback = document.getElementById("feedback").value;
+
+      if (!feedback) {
+        alert("Please enter your feedback first.");
+        return;
+      }
+
+      const subject = encodeURIComponent("The Lost Kid Feedback");
+      const body = encodeURIComponent(
+        "Username: " + (name || "Anonymous") + "Feedback:" + feedback
+      );
+
+      window.location.href =
+        "mailto:stukuandghich@gmail.com?subject=" + subject + "&body=" + body;
+    }
+  </script>
+
+</body>
+</html>

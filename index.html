@@ -1,0 +1,243 @@
+<!--Add your ideas here-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stuku & Ghich Games</title>
+  <style>
+  
+  .shoutout-side {
+  min-height: 145px;
+}
+  
+  .game-card {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  background: #243044;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* LEFT SIDE */
+.game-left iframe {
+  width: 500px;
+  height: 167px;
+  border: none;
+  border-radius: 8px;
+}
+
+/* RIGHT SIDE */
+.shoutout-side {
+  width: 220px;
+  background: rgba(0,0,0,0.6);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.shoutout-side h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* shoutout item */
+.shoutout-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  background: #1c1c1c;
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+
+  transition: 0.2s;
+}
+
+.shoutout-item:hover {
+  background: #2a2a2a;
+  transform: translateY(-2px);
+}
+
+.shoutout-item img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.shoutout-item strong {
+  display: block;
+  font-size: 13px;
+}
+
+.shoutout-item span {
+  font-size: 11px;
+  color: #aaa;
+}
+  @font-face {
+  font-family: pixelify; /* set name */
+  src: url(pixelify.ttf); /* url of the font */
+}
+
+p {
+  font-family: pixelify; /* use font */
+}
+    body {
+  margin: 0;
+  font-family: pixelify, sans-serif;
+  color: #e2e8f0;
+
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+    url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.epicgames.com%2Fue%2Fproduct%2FScreenshot%2FScreenshot19-1920x1080-810b476ed14a4555fd683c9bce63979e.jpg%3Fresize%3D1%26w%3D1920&f=1&nofb=1&ipt=ac588199f851d30d61997d897e80e194486ba9d096d70e313d5bd7736cd9adc0");
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+    header {
+      background: #1e293b;
+      font-family: pixelify, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-family: pixelify, sans-serif;
+      font-size: 2.5rem;
+    }
+    nav {
+      margin-top: 10px;
+      font-family: pixelify, sans-serif;
+    }
+    nav a {
+      margin: 0 10px;
+      font-family: pixelify, sans-serif;
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .hero h2 {
+      font-size: 2rem;
+    }
+    .games {
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #020617;
+      margin-top: 40px;
+    }
+    .footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-content .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-content img {
+  height: 30px;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Stuku & Ghich Games</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#games">Games</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>We make fun, creative games 🎮</h2>
+    <p>Indie developers building cool stuff for Android!</p>
+  </section>
+
+  <section id="games" class="games">
+    <div class="card">
+    <img src=htmllogo.png> 
+      <h3>The Lost Kid (Now 'The Forest Whisper')</h3>
+      <p>You play as a lost child wandering deep inside a dark, endless forest. There is no clear path, no map, and no one to guide you. The deeper you go, the more the forest begins to feel… wrong. Strange creatures lurk between the trees, watching, waiting. Some will chase you. Some will simply exist in ways that don’t make sense.
+
+Your goal is simple: survive, explore, and uncover the truth hidden within the forest.</p>
+      <p><b>Status: </b>Download it from itch.io</p>
+ 
+<div class="game-card">
+  <div class="game-left">
+    <iframe src="https://itch.io/embed/4488600" width="552" height="167" frameborder="0"><a href="https://stukuandghich.itch.io/the-forest-whisper">The Forest Whisper by Stuku and Ghich</a></iframe>
+  </div>
+
+  <!-- RIGHT: shoutouts -->
+  <div class="shoutout-side">
+    <h3>🔥 Shoutouts</h3>
+
+    <div class="shoutout-item">
+      <img src="obama2010.png">
+      <div>
+        <strong>barackobama2010</strong>
+        <span>Our first follower and donator</span>
+      </div>
+    </div>
+</div>
+</div>
+    </div>
+    
+    
+  
+  </section>
+
+  <section id="about" class="hero">
+    <h2>About Us</h2>
+    <p>We are Stuku and Ghich, two indie developers building experimental Android games.</p>
+  </section>
+
+  <section id="contact" class="hero">
+    <h2>Contact</h2>
+    <p>Email: stukuandghich@gmail.com</p>
+  </section>
+
+ <footer>
+  <div class="footer-content">
+    <div class="left">
+      <p>© 2026 Stuku & Ghich Games</p>
+    </div>
+
+    <div class="right">
+      <a href="sideload.html">Independent Side Load</a>
+      <img src=neocities.png>
+      <a href="UACT_CERTIFICATE.png"><img src="android_badge.png"></a>
+      <img src="windows.png">
+      <img src="https://static0.howtogeekimages.com/wordpress/wp-content/uploads/2023/03/Ubuntu-logo-2.jpg?w=1600&h=900&fit=crop">
+      <img src="https://static.itch.io/images/badge-color.svg">
+    </div>
+  </div>
+</footer>
+</body>
+</html>
