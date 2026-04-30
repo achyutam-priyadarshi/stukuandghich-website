@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feedback – The Lost Kid</title>
+  <title>Give comments</title>
 
   <style>
     @font-face {
@@ -83,41 +83,9 @@
 
 <body>
 
-  <div class="container">
-    <h1>Send Feedback</h1>
-
-```
-<input type="text" id="username" placeholder="Your name (optional)">
-<textarea id="feedback" placeholder="Write your feedback here..." required></textarea>
-
-<button class="send-btn" onclick="sendMail()">Send via Email</button>
-
-<p class="note">
-  This will open your email app. No login required.
-</p>
-```
-
-  </div>
-
-  <script>
-    function sendMail() {
-      const name = document.getElementById("username").value;
-      const feedback = document.getElementById("feedback").value;
-
-      if (!feedback) {
-        alert("Please enter your feedback first.");
-        return;
-      }
-
-      const subject = encodeURIComponent("The Lost Kid Feedback");
-      const body = encodeURIComponent(
-        "Username: " + (name || "Anonymous") + "Feedback:" + feedback
-      );
-
-      window.location.href =
-        "mailto:stukuandghich@gmail.com?subject=" + subject + "&body=" + body;
-    }
-  </script>
+<!-- Elfsight Comments | Untitled Comments -->
+<script src="https://elfsightcdn.com/platform.js" async></script>
+<div class="elfsight-app-ef8dcf23-e4e3-4ed3-b989-63ade33f0516" data-elfsight-app-lazy></div> 
 
 </body>
 </html>
