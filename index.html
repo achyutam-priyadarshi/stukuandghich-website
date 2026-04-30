@@ -1,12 +1,13 @@
-<!-- STUKU AND GHICH OFFICIAL WEBSITE SOURCE CODE -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Stuku &amp; Ghich Games</title>
+   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
+    
     :root {
       --cyan: #00f5ff;
       --cyan2: #00c8d4;
@@ -389,6 +390,15 @@
       .logo-name { font-size:0.85rem; }
       .hm { display:none; }
     }
+    .g-screen-fill {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;   /* 👈 removes tint */
+  opacity: 1;         /* 👈 prevents dimming */
+}
   </style>
 </head>
 <body>
@@ -468,9 +478,9 @@
           </div>
         </div>
         <div>
-          <div class="g-screen"><div class="g-screen-fill"><video id="player" playsinline controls data-poster="logo.png">
-  <source src="gameplay.mp4" type="video/mp4" />
-</video></div></div>
+          <div class="g-screen"><div class="g-screen-fill"> <video id="player" playsinline>
+    <source src="gameplay.mp4" type="video/mp4" />
+  </video></div></div>
           <div class="g-embed">
             <div class="g-embed-tag">ITCH.IO</div>
             <iframe src="https://itch.io/embed/4488600" width="552" height="167" frameborder="0" title="The Forest Whisper"></iframe>
@@ -479,6 +489,19 @@
       </div>
     </div>
   </div>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+   <script>
+    const player = new Plyr('#player', {
+      controls: [
+        'play',
+        'progress',
+        'current-time',
+        'mute',
+        'volume',
+        'fullscreen'
+      ]
+    });
+  </script>
 </section>
 
 <section id="about">
