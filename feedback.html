@@ -6,11 +6,15 @@
 <title>Feedback</title>
 
 <style>
-@import url('pixelify.ttf')
+@font-face {
+  font-family: 'pixelify';
+  src: url('pixelify.ttf') format('truetype');
+  font-display: swap;
+}
 
 body {
   margin: 0;
-  font-family: 'pixelify.ttf', sans-serif;
+  font-family: 'pixelify', sans-serif;
   color: #e2e8f0;
 
   display: flex;
@@ -19,78 +23,36 @@ body {
   min-height: 100vh;
 
   background:
-    radial-gradient(circle at top, rgba(56,189,248,0.15), transparent 60%),
-    linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)),
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
     url("https://cdn1.epicgames.com/ue/product/Screenshot/Screenshot19-1920x1080-810b476ed14a4555fd683c9bce63979e.jpg");
 
   background-size: cover;
   background-position: center;
 }
 
-/* Main card */
+/* Card */
 .card {
   width: 90%;
-  max-width: 850px;
-  padding: 30px;
+  max-width: 800px;
+  padding: 25px;
 
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(12px);
+  background: rgba(30, 41, 59, 0.9);
+  border-radius: 12px;
 
-  border-radius: 16px;
-  border: 1px solid rgba(56,189,248,0.25);
-
-  box-shadow:
-    0 0 30px rgba(56,189,248,0.15),
-    0 10px 40px rgba(0,0,0,0.8);
-
-  animation: fadeIn 0.6s ease;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.7);
 }
 
 /* Title */
 .title {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
 }
 
-.subtitle {
-  text-align: center;
-  font-size: 0.9rem;
-  opacity: 0.7;
-  margin-bottom: 25px;
-}
-
-/* Divider */
-.divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, #38bdf8, transparent);
-  margin-bottom: 25px;
-}
-
-/* Elfsight container */
+/* Widget wrapper */
 .widget-wrap {
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
-}
-
-/* Glow hover */
-.card:hover {
-  box-shadow:
-    0 0 40px rgba(56,189,248,0.25),
-    0 15px 50px rgba(0,0,0,0.9);
-  transform: translateY(-2px);
-}
-
-/* Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>
 </head>
@@ -98,10 +60,7 @@ body {
 <body>
 
 <div class="card">
-  <div class="title">💬 Feedback Portal</div>
-  <div class="subtitle">Tell me what you think about the game</div>
-
-  <div class="divider"></div>
+  <div class="title">Give your valuable feedback here!</div>
 
   <div class="widget-wrap">
     <!-- Elfsight Comments -->
