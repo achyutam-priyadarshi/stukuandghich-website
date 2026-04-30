@@ -1,91 +1,63 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Give comments</title>
+  <title>Give Comments</title>
 
   <style>
     @font-face {
-      font-family: pixelify;
-      src: url(pixelify.ttf);
+      font-family: 'Pixelify';
+      src: url('pixelify.ttf') format('truetype');
+      font-display: swap;
     }
 
     body {
       margin: 0;
-      font-family: pixelify, sans-serif;
+      font-family: 'Pixelify', sans-serif;
       color: #e2e8f0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      min-height: 100vh;
 
       background:
         linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-        url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.epicgames.com%2Fue%2Fproduct%2FScreenshot%2FScreenshot19-1920x1080-810b476ed14a4555fd683c9bce63979e.jpg");
+        url("https://cdn1.epicgames.com/ue/product/Screenshot/Screenshot19-1920x1080-810b476ed14a4555fd683c9bce63979e.jpg");
 
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
     }
 
-    .container {
-      max-width: 700px;
-      margin: 60px auto;
-      padding: 30px;
-      background: rgba(30, 41, 59, 0.9);
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    h1 {
+      margin-bottom: 20px;
       text-align: center;
     }
 
-    h1 {
-      margin-top: 0;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      border: none;
-      font-family: pixelify, sans-serif;
-    }
-
-    textarea {
-      height: 120px;
-      resize: none;
-    }
-
-    .send-btn {
-      margin-top: 20px;
-      padding: 12px;
-      width: 100%;
-      background: #38bdf8;
-      color: black;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .send-btn:hover {
-      background: #0ea5e9;
-      transform: scale(1.02);
-    }
-
-    .note {
-      margin-top: 15px;
-      font-size: 0.85rem;
-      opacity: 0.7;
+    .comments-box {
+      width: 90%;
+      max-width: 800px;
+      background: rgba(30, 41, 59, 0.9);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
   </style>
-
 </head>
 
 <body>
-<h1>Give your valuable feedback here!</h1>
-<!-- Elfsight Comments | Untitled Comments -->
-<script src="https://elfsightcdn.com/platform.js" async></script>
-<div class="elfsight-app-ef8dcf23-e4e3-4ed3-b989-63ade33f0516" data-elfsight-app-lazy></div> 
+
+  <h1>Give your valuable feedback here!</h1>
+
+  <div class="comments-box">
+    <!-- Elfsight Comments -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-ef8dcf23-e4e3-4ed3-b989-63ade33f0516" data-elfsight-app-lazy></div>
+  </div>
 
 </body>
 </html>
