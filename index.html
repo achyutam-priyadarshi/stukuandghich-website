@@ -2,434 +2,545 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stuku & Ghich Games</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stuku &amp; Ghich Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
-    * {
-      scroll-behavior: smooth;
+    :root {
+      --cyan: #00f5ff;
+      --cyan2: #00c8d4;
+      --magenta: #ff00cc;
+      --green: #39ff14;
+      --yellow: #ffe600;
+      --dark: #04070f;
+      --dark2: #080e1a;
+      --dark3: #0c1526;
+      --panel: rgba(0,245,255,0.04);
+      --border-c: rgba(0,245,255,0.18);
+      --border-h: rgba(0,245,255,0.55);
+      --text: #c8e8f0;
+      --text-dim: #5a8090;
     }
 
-    @font-face {
-      font-family: pixelify;
-      src: url(pixelify.ttf);
-    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { scroll-behavior: smooth; }
 
     body {
-      margin: 0;
-      font-family: pixelify, sans-serif;
-      color: #e2e8f0;
-      background: 
-        linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.85) 100%),
-        url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.epicgames.com%2Fue%2Fproduct%2FScreenshot%2FScreenshot19-1920x1080-810b476ed14a4555fd683c9bce63979e.jpg%3Fresize%3D1%26w%3D1920&f=1&nofb=1&ipt=ac588199f851d30d61997d897e80e194486ba9d096d70e313d5bd7736cd9adc0");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      line-height: 1.6;
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
     }
 
-    /* HEADER STYLES */
-    header {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      backdrop-filter: blur(10px);
-      padding: 30px 20px;
-      text-align: center;
-      border-bottom: 2px solid rgba(56, 189, 248, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    header h1 {
-      margin: 0;
-      font-family: pixelify, sans-serif;
-      font-size: 3rem;
-      background: linear-gradient(135deg, #38bdf8, #7c3aed);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 2px;
-      animation: glow 3s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { text-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
-      50% { text-shadow: 0 0 40px rgba(124, 58, 237, 0.5); }
-    }
-
-    nav {
-      margin-top: 15px;
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      font-family: pixelify, sans-serif;
-      color: #e2e8f0;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      position: relative;
-      transition: all 0.3s ease;
-      padding: 8px 15px;
-      border-radius: 6px;
-    }
-
-    nav a:hover {
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.1);
-      transform: translateY(-2px);
-    }
-
-    /* HERO SECTION */
-    .hero {
-      text-align: center;
-      padding: 80px 40px;
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.05) 0%, transparent 100%);
-    }
-
-    .hero h2 {
-      font-size: 2.8rem;
-      margin: 20px 0;
-      background: linear-gradient(135deg, #38bdf8, #7c3aed, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 1px;
-    }
-
-    .hero p {
-      font-size: 1.3rem;
-      color: #cbd5e1;
-      max-width: 600px;
-      margin: 15px auto;
-      font-weight: 300;
-    }
-
-    /* GAMES SECTION */
-    .games {
-      padding: 60px 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
-      padding: 30px;
-      border-radius: 16px;
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .card::before {
+    body::after {
       content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.2), transparent);
-      transition: left 0.6s ease;
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
+      );
     }
 
-    .card:hover::before {
-      left: 100%;
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .grid-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,245,255,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(255,0,204,0.05) 0%, transparent 60%);
     }
 
-    .card:hover {
-      transform: translateY(-10px);
-      border-color: rgba(56, 189, 248, 0.5);
-      box-shadow: 0 16px 40px rgba(56, 189, 248, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    /* HEADER */
+    header {
+      position: fixed; top:0; left:0; right:0; z-index:500;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(4,7,15,0.93);
+      border-bottom: 1px solid var(--border-c);
+      backdrop-filter: blur(20px);
+    }
+    header::after {
+      content: '';
+      position: absolute; bottom:0; left:0; right:0; height:1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--magenta), transparent);
+      opacity: 0.5;
     }
 
-    .card img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      transition: transform 0.3s ease;
+    .logo { display:flex; align-items:center; gap:12px; }
+    .logo-chip {
+      width:34px; height:34px;
+      background: rgba(0,245,255,0.08);
+      border: 1.5px solid var(--cyan);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Orbitron',monospace; font-size:0.6rem; font-weight:700;
+      color: var(--cyan);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+    }
+    .logo-name {
+      font-family:'Orbitron',monospace; font-size:1rem; font-weight:700;
+      letter-spacing:0.08em; color:#fff;
+    }
+    .logo-name em { font-style:normal; color:var(--magenta); }
+
+    nav { display:flex; gap:4px; align-items:center; }
+    nav a {
+      font-family:'Rajdhani',sans-serif; font-size:0.8rem; font-weight:600;
+      letter-spacing:0.15em; text-transform:uppercase;
+      color:var(--text-dim); text-decoration:none;
+      padding:7px 16px; border:1px solid transparent;
+      transition:all 0.22s;
+      clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+    }
+    nav a:hover { color:var(--cyan); border-color:var(--border-c); background:var(--panel); }
+    nav a.cta {
+      color:var(--dark); background:var(--cyan); border-color:var(--cyan); font-weight:700;
+    }
+    nav a.cta:hover { background:var(--cyan2); box-shadow:0 0 20px rgba(0,245,255,0.4); }
+
+    /* HUD CORNERS */
+    .hc { position:absolute; width:14px; height:14px; pointer-events:none; }
+    .hc.tl { top:0; left:0; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+    .hc.tr { top:0; right:0; border-top:2px solid var(--cyan); border-right:2px solid var(--cyan); }
+    .hc.bl { bottom:0; left:0; border-bottom:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+    .hc.br { bottom:0; right:0; border-bottom:2px solid var(--cyan); border-right:2px solid var(--cyan); }
+
+    /* HERO */
+    .hero {
+      position:relative; min-height:100vh;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; padding:100px 40px 80px; overflow:hidden;
     }
 
-    .card:hover img {
-      transform: scale(1.05);
+    .orb {
+      position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none;
+      animation:float 9s ease-in-out infinite;
+    }
+    .o1 { width:450px; height:450px; background:rgba(0,245,255,0.06); top:-80px; left:5%; }
+    .o2 { width:350px; height:350px; background:rgba(255,0,204,0.06); bottom:5%; right:3%; animation-delay:-3.5s; }
+    .o3 { width:220px; height:220px; background:rgba(57,255,20,0.04); top:45%; left:62%; animation-delay:-6s; }
+    @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-28px) scale(1.08)} }
+
+    .hero-eyebrow {
+      font-family:'Share Tech Mono',monospace; font-size:0.7rem;
+      color:var(--green); letter-spacing:0.25em; margin-bottom:28px;
+      opacity:0; animation:fu 0.7s 0.2s forwards;
+    }
+    .hero-eyebrow::before { content:'> '; }
+    .hero-eyebrow::after { content:'_'; animation:cur 1s step-end infinite; }
+    @keyframes cur { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-h1 {
+      font-family:'Orbitron',monospace; font-weight:900;
+      font-size: clamp(2.6rem, 7.5vw, 7rem);
+      line-height:1; letter-spacing:0.04em; margin-bottom:14px;
+      opacity:0; animation:fu 0.8s 0.35s forwards;
+    }
+    .hero-h1 .l1 { display:block; color:#fff; text-shadow:0 0 40px rgba(0,245,255,0.25); }
+    .hero-h1 .l2 {
+      display:block;
+      background: linear-gradient(90deg, var(--cyan) 0%, var(--magenta) 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
 
-    .card h3 {
-      margin: 15px 0;
-      font-size: 1.6rem;
-      color: #38bdf8;
-      letter-spacing: 0.5px;
+    .hero-tagline {
+      font-family:'Orbitron',monospace; font-size:clamp(0.58rem,1.1vw,0.75rem);
+      letter-spacing:0.5em; color:var(--text-dim); text-transform:uppercase;
+      margin-bottom:40px; opacity:0; animation:fu 0.8s 0.5s forwards;
     }
 
-    .card p {
-      color: #cbd5e1;
-      font-size: 0.95rem;
-      line-height: 1.8;
-      margin: 12px 0;
+    .hero-body {
+      font-size:1.15rem; font-weight:400; color:var(--text-dim);
+      max-width:520px; line-height:1.85; margin-bottom:50px;
+      opacity:0; animation:fu 0.8s 0.65s forwards;
     }
 
-    .card b {
-      color: #7c3aed;
+    .hero-btns {
+      display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
+      opacity:0; animation:fu 0.8s 0.8s forwards;
     }
 
-    /* BANNER IMAGE */
-    .card .banner {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      margin-bottom: 15px;
-      border-radius: 10px;
+    .btn {
+      font-family:'Orbitron',monospace; font-size:0.7rem; font-weight:700;
+      letter-spacing:0.18em; text-transform:uppercase; text-decoration:none;
+      padding:13px 30px; transition:all 0.22s; cursor:pointer;
+      clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+    }
+    .btn-solid { color:var(--dark); background:var(--cyan); }
+    .btn-solid:hover { box-shadow:0 0 30px rgba(0,245,255,0.55), 0 0 60px rgba(0,245,255,0.2); transform:translateY(-3px); }
+    .btn-ghost { color:var(--cyan); background:transparent; border:1px solid var(--border-c); }
+    .btn-ghost:hover { border-color:var(--cyan); background:rgba(0,245,255,0.08); transform:translateY(-3px); }
+
+    .hero-stats {
+      position:absolute; bottom:38px; left:50%; transform:translateX(-50%);
+      display:flex; gap:36px; align-items:center;
+      opacity:0; animation:fu 0.8s 1s forwards;
+    }
+    .hs-item { text-align:center; }
+    .hs-num { font-family:'Orbitron',monospace; font-size:1.4rem; font-weight:700; color:var(--cyan); }
+    .hs-lbl { font-size:0.65rem; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-dim); margin-top:2px; }
+    .hs-sep { width:1px; height:36px; background:var(--border-c); }
+
+    /* SECTION LABELS */
+    section { position:relative; z-index:1; }
+    .s-tag {
+      font-family:'Share Tech Mono',monospace; font-size:0.65rem;
+      color:var(--cyan); letter-spacing:0.3em; text-transform:uppercase; margin-bottom:10px;
+    }
+    .s-tag::before { content:'// '; }
+    .s-title {
+      font-family:'Orbitron',monospace; font-size:clamp(1.8rem,4vw,3rem);
+      font-weight:900; letter-spacing:0.06em; color:#fff;
+    }
+    .s-line { width:70px; height:2px; background:linear-gradient(90deg,var(--cyan),var(--magenta)); margin:14px auto 0; }
+
+    /* GAMES */
+    #games { padding:120px 40px; }
+    .games-wrap { max-width:1280px; margin:0 auto; }
+    .s-hdr { text-align:center; margin-bottom:60px; }
+
+    .game-panel {
+      position:relative;
+      border:1px solid var(--border-c);
+      background:var(--panel);
+      padding:40px;
+      transition:border-color 0.3s;
+    }
+    .game-panel::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--cyan));
+      background-size:200%;
+      animation:gslide 3s linear infinite;
+    }
+    @keyframes gslide { 0%{background-position:0%} 100%{background-position:200%} }
+    .game-panel:hover { border-color:var(--border-h); }
+
+    .g-grid { display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:start; }
+
+    .g-status {
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'Share Tech Mono',monospace; font-size:0.66rem;
+      color:var(--green); letter-spacing:0.15em;
+      background:rgba(57,255,20,0.07); border:1px solid rgba(57,255,20,0.22);
+      padding:5px 14px; margin-bottom:18px;
+    }
+    .g-dot { width:6px; height:6px; background:var(--green); border-radius:50%; animation:cur 1.5s ease-in-out infinite; }
+
+    .g-genre {
+      font-family:'Share Tech Mono',monospace; font-size:0.62rem;
+      color:var(--magenta); letter-spacing:0.25em; text-transform:uppercase; margin-bottom:12px;
+    }
+    .g-title {
+      font-family:'Orbitron',monospace; font-weight:900;
+      font-size:clamp(1.4rem,2.6vw,2.1rem); letter-spacing:0.05em;
+      color:#fff; line-height:1.2; margin-bottom:6px;
+      text-shadow:0 0 20px rgba(0,245,255,0.2);
+      cursor:default;
+    }
+    .g-title:hover { animation:glitch 0.4s steps(2) 1; }
+    @keyframes glitch {
+      0%{transform:translate(0)} 20%{transform:translate(-3px,1px);text-shadow:2px 0 var(--magenta),-2px 0 var(--cyan)}
+      40%{transform:translate(3px,-1px);text-shadow:-2px 0 var(--cyan),2px 0 var(--magenta)}
+      60%{transform:translate(-1px,2px)} 80%{transform:translate(1px,-2px)}
+      100%{transform:translate(0)}
+    }
+    .g-alias {
+      font-family:'Share Tech Mono',monospace; font-size:0.68rem;
+      color:var(--text-dim); letter-spacing:0.1em; margin-bottom:22px;
+    }
+    .g-desc {
+      font-size:1rem; font-weight:400; line-height:1.9; color:var(--text);
+      border-left:2px solid var(--border-c); padding-left:16px; margin-bottom:26px;
     }
 
-    /* GAME CARD */
-    .game-card {
-      display: flex;
-      gap: 25px;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-      padding: 25px;
-      border-radius: 12px;
-      margin-top: 20px;
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      flex-wrap: wrap;
+    .g-meta { display:flex; border:1px solid var(--border-c); margin-bottom:26px; }
+    .g-mi { flex:1; padding:12px 16px; border-right:1px solid var(--border-c); }
+    .g-mi:last-child { border-right:none; }
+    .g-ml { font-family:'Share Tech Mono',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:4px; }
+    .g-mv { font-family:'Orbitron',monospace; font-size:0.76rem; color:var(--cyan); font-weight:600; }
+
+    .g-screen {
+      position:relative; aspect-ratio:16/9; background:var(--dark2);
+      border:1px solid var(--border-c); overflow:hidden; margin-bottom:16px;
+    }
+    .g-screen::before {
+      content:'PREVIEW'; position:absolute; top:8px; left:12px;
+      font-family:'Share Tech Mono',monospace; font-size:0.58rem;
+      color:var(--cyan); letter-spacing:0.2em; opacity:0.45; z-index:2;
+    }
+    .g-screen-fill {
+      width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg,#040a14,#0a1225);
+      font-size:5rem; opacity:0.1;
     }
 
-    .game-left iframe {
-      width: 100%;
-      max-width: 500px;
-      height: 167px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    .g-embed { border:1px solid var(--border-c); overflow:hidden; position:relative; transition:border-color 0.3s; }
+    .g-embed:hover { border-color:var(--border-h); }
+    .g-embed iframe { display:block; width:100%; height:167px; border:none; }
+    .g-embed-tag {
+      position:absolute; top:7px; right:9px;
+      font-family:'Share Tech Mono',monospace; font-size:0.56rem;
+      color:var(--text-dim); letter-spacing:0.1em; pointer-events:none;
     }
 
-    /* SHOUTOUT SECTION */
-    .shoutout-side {
-      min-height: 145px;
-      flex: 1;
-      min-width: 220px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
-      padding: 15px;
-      border-radius: 12px;
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      backdrop-filter: blur(10px);
+    /* SHOUTOUTS */
+    .shout-hdr {
+      font-family:'Share Tech Mono',monospace; font-size:0.62rem;
+      color:var(--magenta); letter-spacing:0.25em; text-transform:uppercase;
+      margin-bottom:10px; display:flex; align-items:center; gap:10px;
+    }
+    .shout-hdr::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border-c),transparent); }
+
+    .shout-row {
+      display:flex; align-items:center; gap:12px; padding:11px 14px;
+      background:rgba(255,0,204,0.04); border:1px solid rgba(255,0,204,0.14);
+      transition:all 0.22s; cursor:default;
+    }
+    .shout-row:hover { background:rgba(255,0,204,0.09); border-color:rgba(255,0,204,0.35); transform:translateX(5px); }
+    .shout-pfp {
+      width:34px; height:34px; border-radius:50%;
+      border:1px solid rgba(255,0,204,0.3); background:var(--dark3);
+      overflow:hidden; flex-shrink:0;
+      display:flex; align-items:center; justify-content:center; font-size:1rem;
+    }
+    .shout-pfp img { width:100%; height:100%; object-fit:cover; }
+    .shout-name { font-family:'Share Tech Mono',monospace; font-size:0.76rem; color:var(--magenta); }
+    .shout-role { font-size:0.78rem; color:var(--text-dim); margin-top:1px; }
+    .shout-badge {
+      margin-left:auto; font-family:'Share Tech Mono',monospace; font-size:0.58rem;
+      color:var(--yellow); background:rgba(255,230,0,0.07); border:1px solid rgba(255,230,0,0.2);
+      padding:3px 10px; letter-spacing:0.1em;
     }
 
-    .shoutout-side h3 {
-      margin: 0 0 15px 0;
-      font-size: 1.1rem;
-      color: #ec4899;
-      letter-spacing: 0.5px;
+    /* ABOUT */
+    #about { padding:120px 40px; }
+    #about::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg,transparent,var(--border-c),transparent);
     }
+    .about-wrap { max-width:1100px; margin:0 auto; }
 
-    .shoutout-item {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      border: 1px solid rgba(56, 189, 248, 0.15);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; margin-top:60px; }
+
+    .about-copy { font-size:1.05rem; font-weight:400; line-height:1.95; color:var(--text); }
+    .about-copy p { margin-bottom:18px; }
+    .about-copy strong { color:var(--cyan); font-weight:600; }
+
+    .dev-cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:28px; }
+    .dev-card {
+      padding:18px; border:1px solid var(--border-c); background:var(--panel);
+      position:relative; transition:all 0.22s;
     }
+    .dev-card:hover { border-color:var(--border-h); background:rgba(0,245,255,0.06); }
+    .dev-name { font-family:'Orbitron',monospace; font-size:0.85rem; font-weight:700; color:var(--cyan); margin-bottom:3px; }
+    .dev-role { font-family:'Share Tech Mono',monospace; font-size:0.62rem; color:var(--text-dim); letter-spacing:0.1em; }
+    .dev-online { position:absolute; top:11px; right:11px; width:7px; height:7px; background:var(--green); border-radius:50%; animation:cur 2s ease-in-out infinite; }
 
-    .shoutout-item:hover {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
-      transform: translateX(5px);
-      border-color: rgba(56, 189, 248, 0.4);
+    .hud-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border-c); }
+    .hud-cell { background:var(--dark2); padding:26px 22px; }
+    .hud-n { font-family:'Orbitron',monospace; font-size:2.4rem; font-weight:900; color:var(--cyan); line-height:1; margin-bottom:5px; }
+    .hud-n.m { color:var(--magenta); }
+    .hud-n.g { color:var(--green); }
+    .hud-n.y { color:var(--yellow); }
+    .hud-d { font-family:'Share Tech Mono',monospace; font-size:0.62rem; color:var(--text-dim); letter-spacing:0.12em; text-transform:uppercase; }
+
+    /* FOOTER */
+    footer { border-top:1px solid var(--border-c); padding:36px 40px; position:relative; z-index:1; }
+    footer::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg,transparent,var(--cyan),var(--magenta),transparent);
+      opacity:0.45;
     }
-
-    .shoutout-item img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 2px solid rgba(56, 189, 248, 0.3);
-      object-fit: cover;
+    .f-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+    .f-name { font-family:'Orbitron',monospace; font-size:0.9rem; font-weight:700; color:var(--cyan); }
+    .f-name em { font-style:normal; color:var(--magenta); }
+    .f-copy { font-family:'Share Tech Mono',monospace; font-size:0.62rem; color:var(--text-dim); letter-spacing:0.08em; margin-top:5px; }
+    .f-links { display:flex; gap:4px; flex-wrap:wrap; }
+    .f-links a {
+      font-family:'Share Tech Mono',monospace; font-size:0.63rem; color:var(--text-dim);
+      text-decoration:none; letter-spacing:0.1em; padding:6px 12px;
+      border:1px solid transparent; transition:all 0.22s;
     }
+    .f-links a:hover { color:var(--cyan); border-color:var(--border-c); background:var(--panel); }
+    .f-badges { display:flex; gap:10px; align-items:center; }
+    .f-badges img { height:24px; opacity:0.3; filter:grayscale(100%); transition:all 0.3s; }
+    .f-badges img:hover { opacity:0.85; filter:grayscale(0%); }
 
-    .shoutout-item strong {
-      display: block;
-      font-size: 0.9rem;
-      color: #38bdf8;
-      letter-spacing: 0.3px;
-    }
+    @keyframes fu { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease,transform 0.7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
 
-    .shoutout-item span {
-      font-size: 0.8rem;
-      color: #94a3b8;
-    }
-
-    /* FOOTER STYLES */
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
-      border-top: 2px solid rgba(56, 189, 248, 0.2);
-      margin-top: 60px;
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .footer-content .left p {
-      margin: 0;
-      color: #cbd5e1;
-      font-size: 0.95rem;
-    }
-
-    .footer-content .right {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .footer-content a {
-      color: #38bdf8;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      padding: 6px 12px;
-      border-radius: 6px;
-    }
-
-    .footer-content a:hover {
-      color: #7c3aed;
-      background: rgba(56, 189, 248, 0.1);
-    }
-
-    .footer-content img {
-      height: 30px;
-      opacity: 0.7;
-      transition: all 0.3s ease;
-      filter: grayscale(100%);
-    }
-
-    .footer-content img:hover {
-      opacity: 1;
-      filter: grayscale(0%);
-    }
-
-    /* RESPONSIVE DESIGN */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2rem;
-      }
-
-      .hero {
-        padding: 50px 20px;
-      }
-
-      .hero h2 {
-        font-size: 2rem;
-      }
-
-      .games {
-        padding: 40px 20px;
-        gap: 20px;
-      }
-
-      .game-card {
-        flex-direction: column;
-      }
-
-      .game-left iframe {
-        max-width: 100%;
-      }
-
-      nav {
-        gap: 10px;
-      }
+    @media(max-width:860px){
+      .g-grid,.about-grid,.dev-cards { grid-template-columns:1fr; }
+      header { padding:0 20px; }
+      #games,#about { padding:80px 20px; }
+      footer { padding:28px 20px; }
+      .game-panel { padding:22px; }
+      nav a { font-size:0.72rem; padding:6px 10px; }
+      .hero-stats { gap:18px; }
+      .logo-name { font-size:0.85rem; }
+      .hm { display:none; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Stuku & Ghich Games</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#games">Games</a>
-      <a href="#about">About</a>
-      <a href="feedback.html">Give Feedback</a>
-    </nav>
-  </header>
+<div class="grid-bg"></div>
 
-  <section class="hero">
-    <h2>We make fun, creative games 🎮</h2>
-    <p>Indie developers building cool stuff for Android!</p>
-  </section>
-
-  <section id="games" class="games">
-    <div class="card">
-      <img src="banner.png" class="banner">
-      <h3>The Lost Kid (Now 'The Forest Whisper')</h3>
-      <p>You play as a lost child wandering deep inside a dark, endless forest. There is no clear path, no map, and no one to guide you. The deeper you go, the more the forest begins to feel… wrong. Strange creatures lurk between the trees, watching, waiting. Some will chase you. Some will simply exist in ways that don't make sense.
-
-Your goal is simple: survive, explore, and uncover the truth hidden within the forest.</p>
-      <p><b>Status: </b>Download it from itch.io</p>
- 
-<div class="game-card">
-  <div class="game-left">
-    <iframe src="https://itch.io/embed/4488600" width="552" height="167" frameborder="0"><a href="https://stukuandghich.itch.io/the-forest-whisper">The Forest Whisper by Stuku and Ghich</a></iframe>
+<header>
+  <div class="logo">
+    <div class="logo-chip">S&amp;G</div>
+    <div class="logo-name">STUKU <em>&amp;</em> GHICH</div>
   </div>
+  <nav>
+    <a href="#" class="hm">HOME</a>
+    <a href="#games" class="hm">GAMES</a>
+    <a href="#about" class="hm">ABOUT</a>
+    <a href="feedback.html" class="cta">FEEDBACK</a>
+  </nav>
+</header>
 
-  <!-- RIGHT: shoutouts -->
-  <div class="shoutout-side">
-    <h3>🔥 Shoutouts</h3>
+<section class="hero">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
 
-    <div class="shoutout-item">
-      <img src="obama2010.png">
-      <div>
-        <strong>barackobama2010</strong>
-        <span>Our first follower and donator</span>
+  <p class="hero-eyebrow">STUKU &amp; GHICH GAMES STUDIO ONLINE</p>
+  <h1 class="hero-h1">
+    <span class="l1">STUKU &amp; GHICH</span>
+    <span class="l2">GAMES</span>
+  </h1>
+  <p class="hero-tagline">Indie Game Studio &nbsp;·&nbsp; Android Developers</p>
+  <p class="hero-body">We build experimental, atmospheric Android games — dark worlds full of strange creatures, hidden truths, and moments you won't forget.</p>
+  <div class="hero-btns">
+    <a href="#games" class="btn btn-solid">EXPLORE GAMES</a>
+    <a href="#about" class="btn btn-ghost">ABOUT US</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hs-item"><div class="hs-num">01</div><div class="hs-lbl">Games</div></div>
+    <div class="hs-sep"></div>
+    <div class="hs-item"><div class="hs-num">02</div><div class="hs-lbl">Devs</div></div>
+    <div class="hs-sep"></div>
+    <div class="hs-item"><div class="hs-num">2026</div><div class="hs-lbl">Founded</div></div>
+  </div>
+</section>
+
+<section id="games">
+  <div class="games-wrap">
+    <div class="s-hdr reveal">
+      <div class="s-tag">Games Catalog</div>
+      <div class="s-title">OUR GAMES</div>
+      <div class="s-line"></div>
+    </div>
+
+    <div class="game-panel reveal">
+      <div class="hc tl"></div><div class="hc tr"></div>
+      <div class="hc bl"></div><div class="hc br"></div>
+      <div class="g-grid">
+        <div>
+          <div class="g-status"><div class="g-dot"></div>AVAILABLE ON ITCH.IO</div>
+          <div class="g-genre">// SURVIVAL HORROR &nbsp;·&nbsp; EXPLORATION</div>
+          <h3 class="g-title">THE FOREST WHISPER</h3>
+          <div class="g-alias">formerly: "The Lost Kid"</div>
+          <p class="g-desc">You play as a lost child wandering deep inside a dark, endless forest. There is no path, no map, no one to guide you. The deeper you go, the more the forest feels… wrong.<br><br>Strange creatures lurk between the trees — watching, waiting. Some chase you. Some simply exist in ways that don't make sense. Survive, explore, and uncover the truth hidden within.</p>
+          <div class="g-meta">
+            <div class="g-mi"><div class="g-ml">Platform</div><div class="g-mv">Android</div></div>
+            <div class="g-mi"><div class="g-ml">Genre</div><div class="g-mv">Horror</div></div>
+            <div class="g-mi"><div class="g-ml">Year</div><div class="g-mv">2026</div></div>
+          </div>
+          <div class="shout-hdr">Hall of Fame</div>
+          <div class="shout-row">
+            <div class="shout-pfp">
+              <img src="obama2010.png" alt="" onerror="this.style.display='none';this.parentElement.textContent='★'">
+            </div>
+            <div>
+              <div class="shout-name">barackobama2010</div>
+              <div class="shout-role">First follower &amp; donator</div>
+            </div>
+            <div class="shout-badge">PIONEER</div>
+          </div>
+        </div>
+        <div>
+          <div class="g-screen"><div class="g-screen-fill">🌲</div></div>
+          <div class="g-embed">
+            <div class="g-embed-tag">ITCH.IO</div>
+            <iframe src="https://itch.io/embed/4488600" width="552" height="167" frameborder="0" title="The Forest Whisper"></iframe>
+          </div>
+        </div>
       </div>
     </div>
-</div>
-</div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-wrap">
+    <div class="s-hdr reveal">
+      <div class="s-tag">Studio Info</div>
+      <div class="s-title">ABOUT US</div>
+      <div class="s-line"></div>
     </div>
-    
-    
-  
-  </section>
-
-  <section id="about" class="hero">
-    <h2>About Us</h2>
-    <p>We are Stuku and Ghich, two indie developers building experimental Android games.</p>
-  </section>
-    
-
- <footer>
-  <div class="footer-content">
-    <div class="left">
-      <p>© 2026 Stuku & Ghich Games</p>
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="about-copy">
+          <p>We are <strong>Stuku and Ghich</strong> — two indie developers building experimental Android games that push into strange territory.</p>
+          <p>We care about atmosphere, dread, mystery, and moments that stick with you. Every game is a small world: dark places, quiet horror, and hidden truths waiting to be uncovered.</p>
+          <p>We ship on <strong>itch.io</strong> and keep improving based on what players tell us.</p>
+        </div>
+        <div class="dev-cards">
+          <div class="dev-card">
+            <div class="dev-online"></div>
+            <div class="dev-name">STUKU</div>
+            <div class="dev-role">// Co-Founder &amp; Dev</div>
+          </div>
+          <div class="dev-card">
+            <div class="dev-online"></div>
+            <div class="dev-name">GHICH</div>
+            <div class="dev-role">// Co-Founder &amp; Dev</div>
+          </div>
+        </div>
+      </div>
+      <div class="hud-grid reveal">
+        <div class="hud-cell"><div class="hud-n">01</div><div class="hud-d">Games Released</div></div>
+        <div class="hud-cell"><div class="hud-n m">02</div><div class="hud-d">Developers</div></div>
+        <div class="hud-cell"><div class="hud-n g">∞</div><div class="hud-d">Ideas In Queue</div></div>
+        <div class="hud-cell"><div class="hud-n y">2026</div><div class="hud-d">Studio Founded</div></div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="right">
-      <a href="sideload.html">Independent Side Load</a>
-      <a href="uact_certificate.png"><img src="android_badge.png"></a>
-      <img src="windows.png">
-      <img src="https://static0.howtogeekimages.com/wordpress/wp-content/uploads/2023/03/Ubuntu-logo-2.jpg?w=1600&h=900&fit=crop">
-      <img src="https://static.itch.io/images/badge-color.svg">
+<footer>
+  <div class="f-inner">
+    <div>
+      <div class="f-name">STUKU <em>&amp;</em> GHICH</div>
+      <div class="f-copy">© 2026 STUKU &amp; GHICH GAMES. ALL RIGHTS RESERVED.</div>
+    </div>
+    <div class="f-links">
+      <a href="sideload.html">SIDELOAD</a>
+      <a href="feedback.html">FEEDBACK</a>
+      <a href="UACT_CERTIFICATE.png">CERTIFICATE</a>
+    </div>
+    <div class="f-badges">
+      <img src="android_badge.png" alt="Android">
+      <img src="https://static.itch.io/images/badge-color.svg" alt="itch.io">
     </div>
   </div>
 </footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e,i) => {
+      if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*100); io.unobserve(e.target); }
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
