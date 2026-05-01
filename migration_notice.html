@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>We've Moved — Stuku &amp; Ghich Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #00f5ff;
+      --cyan2: #00c8d4;
+      --magenta: #ff00cc;
+      --green: #39ff14;
+      --yellow: #ffe600;
+      --dark: #04070f;
+      --dark2: #080e1a;
+      --dark3: #0c1526;
+      --panel: rgba(0,245,255,0.04);
+      --border-c: rgba(0,245,255,0.18);
+      --border-h: rgba(0,245,255,0.55);
+      --text: #c8e8f0;
+      --text-dim: #5a8090;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* SCANLINES */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
+      );
+    }
+
+    /* GRID BG */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .grid-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,245,255,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(255,0,204,0.05) 0%, transparent 60%);
+    }
+
+    /* ORBS */
+    .orb { position: fixed; border-radius: 50%; filter: blur(70px); pointer-events: none; z-index: 0; animation: float 9s ease-in-out infinite; }
+    .o1 { width: 450px; height: 450px; background: rgba(0,245,255,0.05); top: -80px; left: 5%; }
+    .o2 { width: 300px; height: 300px; background: rgba(255,0,204,0.05); bottom: 10%; right: 5%; animation-delay: -4s; }
+    @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-24px) scale(1.07)} }
+
+    /* HEADER */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(4,7,15,0.93);
+      border-bottom: 1px solid var(--border-c);
+      backdrop-filter: blur(20px);
+    }
+    header::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--magenta), transparent);
+      opacity: 0.5;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-chip {
+      width: 34px; height: 34px; background: rgba(0,245,255,0.08);
+      border: 1.5px solid var(--cyan);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', monospace; font-size: 0.6rem; font-weight: 700; color: var(--cyan);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+    }
+    .logo-name { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; letter-spacing: 0.08em; color: #fff; }
+    .logo-name em { font-style: normal; color: var(--magenta); }
+
+    nav { display: flex; gap: 4px; align-items: center; }
+    nav a {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim);
+      text-decoration: none; padding: 7px 16px; border: 1px solid transparent;
+      transition: all 0.22s;
+      clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+    }
+    nav a:hover { color: var(--cyan); border-color: var(--border-c); background: var(--panel); }
+    nav a.cta { color: var(--dark); background: var(--cyan); border-color: var(--cyan); font-weight: 700; }
+    nav a.cta:hover { background: var(--cyan2); box-shadow: 0 0 20px rgba(0,245,255,0.4); }
+
+    /* HUD CORNERS */
+    .hc { position: absolute; width: 14px; height: 14px; pointer-events: none; }
+    .hc.tl { top:0; left:0; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+    .hc.tr { top:0; right:0; border-top:2px solid var(--cyan); border-right:2px solid var(--cyan); }
+    .hc.bl { bottom:0; left:0; border-bottom:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+    .hc.br { bottom:0; right:0; border-bottom:2px solid var(--cyan); border-right:2px solid var(--cyan); }
+
+    /* MAIN */
+    main {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 100px 24px 60px;
+      position: relative; z-index: 1;
+      gap: 20px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fu { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes gslide { 0%{background-position:0%} 100%{background-position:200%} }
+    @keyframes cur { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0,245,255,0.4); }
+      70% { transform: scale(1); box-shadow: 0 0 0 18px rgba(0,245,255,0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0,245,255,0); }
+    }
+
+    .page-tag {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+      color: var(--green); letter-spacing: 0.28em; text-align: center;
+      opacity: 0; animation: fu 0.7s 0.1s forwards;
+    }
+    .page-tag::before { content: '> '; }
+    .page-tag::after { content: '_'; animation: cur 1s step-end infinite; }
+
+    /* MAIN PANEL */
+    .migrate-panel {
+      position: relative; width: 100%; max-width: 780px;
+      border: 1px solid var(--border-c); background: var(--panel); padding: 44px 40px;
+      transition: border-color 0.3s;
+      opacity: 0; animation: fu 0.8s 0.25s forwards;
+    }
+    .migrate-panel::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--cyan));
+      background-size: 200%; animation: gslide 3s linear infinite;
+    }
+    .migrate-panel:hover { border-color: var(--border-h); }
+
+    /* panel bar */
+    .panel-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--border-c);
+    }
+    .bar-left { display: flex; align-items: center; gap: 8px; }
+    .bd { width: 8px; height: 8px; border-radius: 50%; }
+    .bd-r { background: #ff5f56; }
+    .bd-y { background: #ffbd2e; }
+    .bd-g { background: var(--green); animation: blink 2s ease-in-out infinite; }
+    .bar-file { font-family: 'Share Tech Mono', monospace; font-size: 0.63rem; color: var(--text-dim); letter-spacing: 0.15em; margin-left: 10px; }
+    .bar-badge {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--yellow);
+      border: 1px solid rgba(255,230,0,0.3); background: rgba(255,230,0,0.07);
+      padding: 4px 12px; letter-spacing: 0.12em;
+    }
+
+    /* rocket + title */
+    .move-header {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; margin-bottom: 32px;
+    }
+    .move-icon {
+      width: 70px; height: 70px;
+      border: 2px solid var(--cyan);
+      background: rgba(0,245,255,0.07);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin-bottom: 20px;
+      animation: pulse-ring 2.5s ease-in-out infinite;
+      clip-path: polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+    }
+    .move-title {
+      font-family: 'Orbitron', monospace; font-weight: 900;
+      font-size: clamp(1.5rem, 4vw, 2.3rem);
+      letter-spacing: 0.06em; color: #fff; line-height: 1.2; margin-bottom: 10px;
+      text-shadow: 0 0 30px rgba(0,245,255,0.15);
+    }
+    .move-title span {
+      background: linear-gradient(90deg, var(--cyan), var(--magenta));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .move-sub { font-size: 1rem; color: var(--text-dim); line-height: 1.75; max-width: 500px; }
+    .move-sub strong { color: var(--yellow); font-weight: 600; }
+
+    /* new home box */
+    .new-home {
+      border: 1px solid var(--border-h); background: rgba(0,245,255,0.05);
+      padding: 24px 28px; margin-bottom: 28px; text-align: center; position: relative;
+    }
+    .new-home::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    }
+    .nh-label {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+      color: var(--text-dim); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .nh-url {
+      font-family: 'Orbitron', monospace; font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 700; letter-spacing: 0.05em;
+      color: var(--cyan); text-decoration: none; display: inline-block;
+      transition: all 0.22s;
+    }
+    .nh-url:hover { text-shadow: 0 0 24px rgba(0,245,255,0.8); transform: scale(1.02); }
+    .nh-arrow { color: var(--magenta); margin-right: 8px; }
+
+    .visit-btn {
+      display: inline-flex; align-items: center; gap: 10px; margin-top: 18px;
+      padding: 13px 30px;
+      background: var(--cyan); color: var(--dark);
+      font-family: 'Orbitron', monospace; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
+      transition: all 0.22s;
+      clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+    }
+    .visit-btn:hover { box-shadow: 0 0 30px rgba(0,245,255,0.5); transform: translateY(-2px); background: var(--cyan2); }
+
+    /* divider */
+    .panel-div {
+      height: 1px; background: linear-gradient(90deg, transparent, var(--border-c), transparent);
+      margin: 28px 0;
+    }
+
+    /* thank you */
+    .ty-section { text-align: center; }
+    .ty-eyebrow {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+      color: var(--magenta); letter-spacing: 0.3em; text-transform: uppercase;
+      margin-bottom: 14px; display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .ty-eyebrow::before, .ty-eyebrow::after {
+      content: ''; width: 50px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,0,204,0.35));
+    }
+    .ty-eyebrow::after { background: linear-gradient(90deg, rgba(255,0,204,0.35), transparent); }
+
+    .ty-title {
+      font-family: 'Orbitron', monospace; font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 700; color: #fff; letter-spacing: 0.05em; margin-bottom: 16px;
+    }
+    .ty-body {
+      font-size: 1rem; color: var(--text-dim); line-height: 1.8;
+      max-width: 520px; margin: 0 auto 24px;
+      border-left: 2px solid rgba(255,0,204,0.2); padding-left: 16px; text-align: left;
+    }
+    .ty-body strong { color: var(--text); font-weight: 600; }
+
+    .archive-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 24px;
+      background: rgba(255,0,204,0.05); border: 1px solid rgba(255,0,204,0.25);
+      color: var(--magenta); text-decoration: none;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em;
+      transition: all 0.22s;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+    }
+    .archive-btn:hover {
+      background: rgba(255,0,204,0.12); border-color: rgba(255,0,204,0.5);
+      transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,0,204,0.15);
+    }
+
+    /* status row */
+    .status-row { display: flex; border: 1px solid var(--border-c); margin-top: 28px; }
+    .sr-cell { flex: 1; padding: 12px 14px; border-right: 1px solid var(--border-c); text-align: center; }
+    .sr-cell:last-child { border-right: none; }
+    .sr-lbl { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; color: var(--text-dim); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 5px; }
+    .sr-val { font-family: 'Orbitron', monospace; font-size: 0.7rem; font-weight: 600; color: var(--cyan); }
+    .sr-val.grn { color: var(--green); }
+    .sr-val.ylw { color: var(--yellow); }
+    .sr-val.mag { color: var(--magenta); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border-c); padding: 28px 40px; position: relative; z-index: 1; }
+    footer::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--magenta), transparent); opacity: 0.45;
+    }
+    .f-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .f-name { font-family: 'Orbitron', monospace; font-size: 0.88rem; font-weight: 700; color: var(--cyan); }
+    .f-name em { font-style: normal; color: var(--magenta); }
+    .f-copy { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.08em; margin-top: 4px; }
+    .f-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .f-links a {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--text-dim);
+      text-decoration: none; letter-spacing: 0.1em; padding: 6px 12px;
+      border: 1px solid transparent; transition: all 0.22s;
+    }
+    .f-links a:hover { color: var(--cyan); border-color: var(--border-c); background: var(--panel); }
+
+    @media(max-width:600px){
+      header { padding: 0 16px; }
+      main { padding: 90px 16px 50px; }
+      .migrate-panel { padding: 22px 18px; }
+      footer { padding: 20px 16px; }
+      .status-row { flex-wrap: wrap; }
+      .sr-cell { min-width: 50%; border-bottom: 1px solid var(--border-c); }
+      .sr-cell:nth-child(3), .sr-cell:nth-child(4) { border-bottom: none; }
+      nav a { font-size: 0.7rem; padding: 6px 10px; }
+      .logo-name { font-size: 0.82rem; }
+      .hm { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+
+  <header>
+    <a href="https://stukuandghich.games" class="logo">
+      <div class="logo-chip">S&amp;G</div>
+      <div class="logo-name">STUKU <em>&amp;</em> GHICH</div>
+    </a>
+    <nav>
+      <a href="https://stukuandghich.games" class="hm">HOME</a>
+      <a href="https://stukuandghich.games/#games" class="hm">GAMES</a>
+      <a href="https://stukuandghich.games/feedback.html" class="cta">FEEDBACK</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-tag">STUDIO BROADCAST — IMPORTANT NOTICE</div>
+
+    <div class="migrate-panel">
+      <div class="hc tl"></div><div class="hc tr"></div>
+      <div class="hc bl"></div><div class="hc br"></div>
+
+      <div class="panel-bar">
+        <div class="bar-left">
+          <div class="bd bd-r"></div>
+          <div class="bd bd-y"></div>
+          <div class="bd bd-g"></div>
+          <span class="bar-file">migration_notice.exe</span>
+        </div>
+        <div class="bar-badge">ARCHIVE MODE</div>
+      </div>
+
+      <!-- MOVING SECTION -->
+      <div class="move-header">
+        <div class="move-icon">🚀</div>
+        <h1 class="move-title">WE ARE <span>MOVING</span></h1>
+        <p class="move-sub">We've officially moved our main website to a new home. This Neocities site will remain as a <strong>read-only archive</strong> of where our journey began.</p>
+      </div>
+
+      <div class="new-home">
+        <div class="nh-label">New Official Address</div>
+        <a href="https://stukuandghich.games" target="_blank" class="nh-url">
+          <span class="nh-arrow">▶</span>stukuandghich.games
+        </a>
+        <br>
+        <a href="https://stukuandghich.games" target="_blank" class="visit-btn">
+          LAUNCH NEW SITE &nbsp;↗
+        </a>
+      </div>
+
+      <div class="panel-div"></div>
+
+      <!-- THANK YOU SECTION -->
+      <div class="ty-section">
+        <div class="ty-eyebrow">A Message from the Studio</div>
+        <h2 class="ty-title">THANK YOU, NEOCITIES ❤️</h2>
+        <p class="ty-body">
+          Neocities is where we built our <strong>first website</strong>, learned web development, and started sharing our games with the world. We'll always respect and remember this as the place where everything started.
+        </p>
+        <a href="https://stukuandghich.neocities.org/old/ARCHIVES/29-04-2026/" class="archive-btn">
+          🕰&nbsp; VIEW ARCHIVE — 29 APRIL 2026
+        </a>
+      </div>
+
+      <!-- STATUS ROW -->
+      <div class="status-row">
+        <div class="sr-cell">
+          <div class="sr-lbl">This Site</div>
+          <div class="sr-val ylw">READ-ONLY</div>
+        </div>
+        <div class="sr-cell">
+          <div class="sr-lbl">New Site</div>
+          <div class="sr-val grn">ONLINE</div>
+        </div>
+        <div class="sr-cell">
+          <div class="sr-lbl">Studio</div>
+          <div class="sr-val">ACTIVE</div>
+        </div>
+        <div class="sr-cell">
+          <div class="sr-lbl">Archive Date</div>
+          <div class="sr-val mag">29 APR 2026</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="f-inner">
+      <div>
+        <div class="f-name">STUKU <em>&amp;</em> GHICH</div>
+        <div class="f-copy">© 2026 STUKU &amp; GHICH GAMES. ALL RIGHTS RESERVED.</div>
+      </div>
+      <div class="f-links">
+        <a href="https://stukuandghich.games">NEW SITE</a>
+        <a href="https://stukuandghich.neocities.org/old/ARCHIVES/29-04-2026/">ARCHIVE</a>
+        <a href="https://stukuandghich.games/feedback.html">FEEDBACK</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
