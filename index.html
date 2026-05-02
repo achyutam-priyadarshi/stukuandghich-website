@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Stuku &amp; Ghich Games</title>
-   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
-    
     :root {
       --cyan: #00f5ff;
       --cyan2: #00c8d4;
@@ -108,6 +106,32 @@
     }
     nav a.cta:hover { background:var(--cyan2); box-shadow:0 0 20px rgba(0,245,255,0.4); }
 
+    /* NEW: Play nav link — magenta glow variant */
+    nav a.play-nav {
+      color: var(--green);
+      border-color: rgba(57,255,20,0.3);
+      background: rgba(57,255,20,0.06);
+      font-weight: 700;
+      position: relative;
+    }
+    nav a.play-nav::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      margin-right: 7px;
+      animation: blink-dot 1.4s ease-in-out infinite;
+      vertical-align: middle;
+    }
+    nav a.play-nav:hover {
+      color: var(--green);
+      border-color: rgba(57,255,20,0.6);
+      background: rgba(57,255,20,0.12);
+      box-shadow: 0 0 18px rgba(57,255,20,0.2);
+    }
+    @keyframes blink-dot { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
     /* HUD CORNERS */
     .hc { position:absolute; width:14px; height:14px; pointer-events:none; }
     .hc.tl { top:0; left:0; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); }
@@ -180,6 +204,27 @@
     .btn-solid:hover { box-shadow:0 0 30px rgba(0,245,255,0.55), 0 0 60px rgba(0,245,255,0.2); transform:translateY(-3px); }
     .btn-ghost { color:var(--cyan); background:transparent; border:1px solid var(--border-c); }
     .btn-ghost:hover { border-color:var(--cyan); background:rgba(0,245,255,0.08); transform:translateY(-3px); }
+
+    /* NEW: Play Online hero button */
+    .btn-play {
+      color: var(--dark);
+      background: var(--green);
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-play::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    .btn-play:hover::before { transform: translateX(100%); }
+    .btn-play:hover {
+      box-shadow: 0 0 30px rgba(57,255,20,0.55), 0 0 60px rgba(57,255,20,0.2);
+      transform: translateY(-3px);
+    }
 
     .hero-stats {
       position:absolute; bottom:38px; left:50%; transform:translateX(-50%);
@@ -269,6 +314,58 @@
     .g-ml { font-family:'Share Tech Mono',monospace; font-size:0.58rem; color:var(--text-dim); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:4px; }
     .g-mv { font-family:'Orbitron',monospace; font-size:0.76rem; color:var(--cyan); font-weight:600; }
 
+    /* NEW: Play Online CTA inside game card */
+    .g-play-cta {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .g-play-btn {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 20px;
+      font-family: 'Orbitron', monospace; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
+      transition: all 0.25s;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      position: relative; overflow: hidden;
+    }
+    .g-play-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    .g-play-btn:hover::before { transform: translateX(100%); }
+
+    .g-play-btn.primary {
+      background: var(--green); color: var(--dark);
+    }
+    .g-play-btn.primary:hover {
+      box-shadow: 0 0 24px rgba(57,255,20,0.5), 0 0 48px rgba(57,255,20,0.15);
+      transform: translateY(-2px);
+    }
+    .g-play-btn.secondary {
+      background: var(--panel); color: var(--cyan);
+      border: 1px solid var(--border-c);
+    }
+    .g-play-btn.secondary:hover {
+      border-color: var(--border-h); background: rgba(0,245,255,0.08);
+      transform: translateY(-2px);
+    }
+
+    .g-play-icon {
+      font-size: 0.9rem;
+    }
+
+    /* play pulse ring on primary btn */
+    .g-play-btn.primary .g-play-icon {
+      position: relative;
+      display: inline-flex;
+    }
+
     .g-screen {
       position:relative; aspect-ratio:16/9; background:var(--dark2);
       border:1px solid var(--border-c); overflow:hidden; margin-bottom:16px;
@@ -279,9 +376,13 @@
       color:var(--cyan); letter-spacing:0.2em; opacity:0.45; z-index:2;
     }
     .g-screen-fill {
-      width:100%; height:100%; display:flex; align-items:center; justify-content:center;
-      background:linear-gradient(135deg,#040a14,#0a1225);
-      font-size:5rem; opacity:0.1;
+      width: 100%;
+      height: 90%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      opacity: 1;
     }
 
     .g-embed { border:1px solid var(--border-c); overflow:hidden; position:relative; transition:border-color 0.3s; }
@@ -386,31 +487,23 @@
       #games,#about { padding:80px 20px; }
       footer { padding:28px 20px; }
       .game-panel { padding:22px; }
-      nav a { font-size:0.72rem; padding:6px 10px; }
+      nav a { font-size:0.68rem; padding:5px 8px; }
       .hero-stats { gap:18px; }
       .logo-name { font-size:0.85rem; }
       .hm { display:none; }
     }
-    .g-screen-fill {
-  width: 100%;
-  height: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;   /* 👈 removes tint */
-  opacity: 1;         /* 👈 prevents dimming */
-}
   </style>
 </head>
-  <!-- Google tag (gtag.js) -->
+
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DMY0KFKS8Z"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-DMY0KFKS8Z');
 </script>
+
 <body>
 <div class="grid-bg"></div>
 
@@ -423,6 +516,7 @@
     <a href="#" class="hm">HOME</a>
     <a href="#games" class="hm">GAMES</a>
     <a href="#about" class="hm">ABOUT</a>
+    <a href="play.html" class="play-nav">PLAY ONLINE</a>
     <a href="feedback.html" class="cta">FEEDBACK</a>
   </nav>
 </header>
@@ -440,6 +534,7 @@
   <p class="hero-tagline">Indie Game Studio &nbsp;·&nbsp; Android Developers</p>
   <p class="hero-body">We build experimental, atmospheric Android games — dark worlds full of strange creatures, hidden truths, and moments you won't forget.</p>
   <div class="hero-btns">
+    <a href="play.html" class="btn btn-play">▶ PLAY ONLINE NOW</a>
     <a href="#games" class="btn btn-solid">EXPLORE GAMES</a>
     <a href="#about" class="btn btn-ghost">ABOUT US</a>
   </div>
@@ -475,6 +570,15 @@
             <div class="g-mi"><div class="g-ml">Genre</div><div class="g-mv">Horror</div></div>
             <div class="g-mi"><div class="g-ml">Year</div><div class="g-mv">2026</div></div>
           </div>
+
+          <!-- ── PLAY ONLINE CTA ── -->
+          <div class="g-play-cta">
+            <a href="play.html" class="g-play-btn primary">
+              <span class="g-play-icon">▶</span> PLAY ONLINE NOW
+            </a>
+
+          </div>
+
           <div class="shout-hdr">Hall of Fame</div>
           <div class="shout-row">
             <div class="shout-pfp">
@@ -487,10 +591,15 @@
             <div class="shout-badge">PIONEER</div>
           </div>
         </div>
+
         <div>
-          <div class="g-screen"><div class="g-screen-fill"> <video id="player" playsinline>
-    <source src="gameplay.mp4" type="video/mp4" />
-  </video></div></div>
+          <div class="g-screen">
+            <div class="g-screen-fill">
+              <video id="player" playsinline>
+                <source src="gameplay.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
           <div class="g-embed">
             <div class="g-embed-tag">ITCH.IO</div>
             <iframe frameborder="0" src="https://itch.io/embed/4488600?bg_color=222222&amp;fg_color=eeeeee&amp;link_color=299704&amp;border_color=363636" width="552" height="167"><a href="https://stukuandghich.itch.io/the-forest-whisper">The Forest Whisper</a></iframe>
@@ -499,17 +608,11 @@
       </div>
     </div>
   </div>
+
   <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-   <script>
+  <script>
     const player = new Plyr('#player', {
-      controls: [
-        'play',
-        'progress',
-        'current-time',
-        'mute',
-        'volume',
-        'fullscreen'
-      ]
+      controls: ['play','progress','current-time','mute','volume','fullscreen']
     });
   </script>
 </section>
@@ -558,7 +661,7 @@
       <div class="f-copy">© 2026 STUKU &amp; GHICH GAMES. ALL RIGHTS RESERVED.</div>
     </div>
     <div class="f-links">
-      <a href="sideload.html">SIDELOAD</a>
+      <a href="play.html">PLAY ONLINE</a>
       <a href="feedback.html">FEEDBACK</a>
       <a href="uact_certificate.png">CERTIFICATE</a>
     </div>
