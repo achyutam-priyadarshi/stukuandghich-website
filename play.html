@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Play Online — The Forest Whisper</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #00f5ff;
+      --cyan2: #00c8d4;
+      --magenta: #ff00cc;
+      --green: #39ff14;
+      --yellow: #ffe600;
+      --dark: #04070f;
+      --dark2: #080e1a;
+      --dark3: #0c1526;
+      --panel: rgba(0,245,255,0.04);
+      --border-c: rgba(0,245,255,0.18);
+      --border-h: rgba(0,245,255,0.55);
+      --text: #c8e8f0;
+      --text-dim: #5a8090;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* SCANLINES */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
+      );
+    }
+
+    /* GRID BG */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .grid-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,245,255,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(255,0,204,0.05) 0%, transparent 60%);
+    }
+
+    /* ORBS */
+    .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: float 9s ease-in-out infinite; }
+    .o1 { width: 500px; height: 500px; background: rgba(0,245,255,0.05); top: -100px; left: 0%; }
+    .o2 { width: 350px; height: 350px; background: rgba(255,0,204,0.05); bottom: 5%; right: 2%; animation-delay: -4s; }
+    .o3 { width: 200px; height: 200px; background: rgba(57,255,20,0.03); top: 50%; left: 60%; animation-delay: -7s; }
+    @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-22px) scale(1.06)} }
+
+    /* HEADER */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(4,7,15,0.95);
+      border-bottom: 1px solid var(--border-c);
+      backdrop-filter: blur(20px);
+    }
+    header::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--magenta), transparent);
+      opacity: 0.5;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-chip {
+      width: 34px; height: 34px; background: rgba(0,245,255,0.08);
+      border: 1.5px solid var(--cyan);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', monospace; font-size: 0.6rem; font-weight: 700; color: var(--cyan);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+    }
+    .logo-name { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; letter-spacing: 0.08em; color: #fff; }
+    .logo-name em { font-style: normal; color: var(--magenta); }
+
+    nav { display: flex; gap: 4px; align-items: center; }
+    nav a {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim);
+      text-decoration: none; padding: 7px 16px; border: 1px solid transparent;
+      transition: all 0.22s;
+      clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+    }
+    nav a:hover { color: var(--cyan); border-color: var(--border-c); background: var(--panel); }
+    nav a.active { color: var(--cyan); border-color: var(--border-c); background: var(--panel); }
+    nav a.cta { color: var(--dark); background: var(--cyan); border-color: var(--cyan); font-weight: 700; }
+    nav a.cta:hover { background: var(--cyan2); box-shadow: 0 0 20px rgba(0,245,255,0.4); }
+
+    /* HUD CORNERS */
+    .hc { position: absolute; width: 14px; height: 14px; pointer-events: none; }
+    .hc.tl { top:0; left:0; border-top:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+    .hc.tr { top:0; right:0; border-top:2px solid var(--cyan); border-right:2px solid var(--cyan); }
+    .hc.bl { bottom:0; left:0; border-bottom:2px solid var(--cyan); border-left:2px solid var(--cyan); }
+    .hc.br { bottom:0; right:0; border-bottom:2px solid var(--cyan); border-right:2px solid var(--cyan); }
+
+    /* MAIN */
+    main {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center;
+      padding: 90px 24px 60px;
+      position: relative; z-index: 1;
+      gap: 0;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fu { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes gslide { 0%{background-position:0%} 100%{background-position:200%} }
+    @keyframes cur { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    @keyframes live-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(57,255,20,0.5); }
+      50% { box-shadow: 0 0 0 8px rgba(57,255,20,0); }
+    }
+
+    /* TOP META BAR */
+    .top-meta {
+      width: 100%; max-width: 900px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      padding: 14px 0 18px;
+      opacity: 0; animation: fu 0.7s 0.1s forwards;
+    }
+    .meta-left {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .meta-eyebrow {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+      color: var(--text-dim); letter-spacing: 0.25em;
+    }
+    .meta-eyebrow::before { content: '// '; color: var(--border-c); }
+    .meta-title {
+      font-family: 'Orbitron', monospace; font-weight: 900;
+      font-size: clamp(1.1rem, 3vw, 1.7rem); letter-spacing: 0.05em;
+      color: #fff;
+    }
+    .meta-title span {
+      background: linear-gradient(90deg, var(--cyan), var(--magenta));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .meta-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .live-badge {
+      display: flex; align-items: center; gap: 7px;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+      color: var(--green); letter-spacing: 0.18em;
+      border: 1px solid rgba(57,255,20,0.25); background: rgba(57,255,20,0.07);
+      padding: 6px 14px;
+    }
+    .live-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      animation: live-pulse 1.5s ease-in-out infinite;
+    }
+
+    .genre-tag {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+      color: var(--text-dim); letter-spacing: 0.15em;
+      border: 1px solid var(--border-c); padding: 6px 14px;
+    }
+
+    /* GAME PANEL */
+    .game-panel {
+      position: relative; width: 100%; max-width: 900px;
+      border: 1px solid var(--border-c); background: var(--panel);
+      opacity: 0; animation: fu 0.8s 0.25s forwards;
+      transition: border-color 0.3s;
+    }
+    .game-panel::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--cyan));
+      background-size: 200%; animation: gslide 3s linear infinite;
+    }
+    .game-panel:hover { border-color: var(--border-h); }
+
+    /* panel top bar */
+    .panel-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; border-bottom: 1px solid var(--border-c);
+      background: rgba(4,7,15,0.6);
+    }
+    .bar-left { display: flex; align-items: center; gap: 8px; }
+    .bd { width: 8px; height: 8px; border-radius: 50%; }
+    .bd-r { background: #ff5f56; }
+    .bd-y { background: #ffbd2e; }
+    .bd-g { background: var(--green); animation: blink 2s ease-in-out infinite; }
+    .bar-file {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.6rem;
+      color: var(--text-dim); letter-spacing: 0.14em; margin-left: 10px;
+    }
+    .bar-right { display: flex; align-items: center; gap: 14px; }
+    .bar-stat {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
+      color: var(--text-dim); letter-spacing: 0.12em;
+    }
+    .bar-stat span { color: var(--cyan); }
+
+    /* EMBED WRAPPER */
+    .embed-wrap {
+      position: relative;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      /* letterbox padding for aspect ratio */
+      padding: 0;
+    }
+
+    .embed-wrap iframe {
+      display: block;
+      width: 100%;
+      /* will be overridden by JS for exact sizing */
+      border: none;
+    }
+
+    /* scanline overlay on game */
+    .embed-overlay {
+      position: absolute; inset: 0; pointer-events: none; z-index: 2;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
+      );
+    }
+
+    /* corner HUD inside embed */
+    .embed-hud-tl, .embed-hud-tr, .embed-hud-bl, .embed-hud-br {
+      position: absolute; width: 20px; height: 20px; pointer-events: none; z-index: 3;
+    }
+    .embed-hud-tl { top: 8px; left: 8px; border-top: 2px solid rgba(0,245,255,0.4); border-left: 2px solid rgba(0,245,255,0.4); }
+    .embed-hud-tr { top: 8px; right: 8px; border-top: 2px solid rgba(0,245,255,0.4); border-right: 2px solid rgba(0,245,255,0.4); }
+    .embed-hud-bl { bottom: 8px; left: 8px; border-bottom: 2px solid rgba(0,245,255,0.4); border-left: 2px solid rgba(0,245,255,0.4); }
+    .embed-hud-br { bottom: 8px; right: 8px; border-bottom: 2px solid rgba(0,245,255,0.4); border-right: 2px solid rgba(0,245,255,0.4); }
+
+    /* BOTTOM INFO BAR */
+    .info-bar {
+      display: flex; border-top: 1px solid var(--border-c);
+      background: rgba(4,7,15,0.5);
+    }
+    .ib-cell {
+      flex: 1; padding: 10px 16px; border-right: 1px solid var(--border-c);
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .ib-cell:last-child { border-right: none; }
+    .ib-label {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.52rem;
+      color: var(--text-dim); letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .ib-val {
+      font-family: 'Orbitron', monospace; font-size: 0.68rem;
+      font-weight: 600; color: var(--cyan);
+    }
+    .ib-val.grn { color: var(--green); }
+    .ib-val.mag { color: var(--magenta); }
+
+    /* BELOW PANEL ACTIONS */
+    .actions {
+      width: 100%; max-width: 900px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      padding: 18px 0 0;
+      opacity: 0; animation: fu 0.8s 0.5s forwards;
+    }
+    .actions-left {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+      color: var(--text-dim); letter-spacing: 0.1em; line-height: 1.7;
+    }
+    .actions-left a { color: var(--cyan); text-decoration: none; }
+    .actions-left a:hover { text-decoration: underline; }
+
+    .actions-right { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .act-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Orbitron', monospace; font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none;
+      padding: 10px 22px; border: 1px solid var(--border-c);
+      background: var(--panel); color: var(--cyan);
+      transition: all 0.22s;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+    }
+    .act-btn:hover { border-color: var(--border-h); background: rgba(0,245,255,0.1); transform: translateY(-2px); }
+    .act-btn.primary { background: var(--cyan); color: var(--dark); border-color: var(--cyan); }
+    .act-btn.primary:hover { background: var(--cyan2); box-shadow: 0 0 24px rgba(0,245,255,0.4); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border-c); padding: 24px 40px; position: relative; z-index: 1; margin-top: auto; }
+    footer::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--magenta), transparent); opacity: 0.45;
+    }
+    .f-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .f-name { font-family: 'Orbitron', monospace; font-size: 0.88rem; font-weight: 700; color: var(--cyan); }
+    .f-name em { font-style: normal; color: var(--magenta); }
+    .f-copy { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.08em; margin-top: 4px; }
+    .f-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .f-links a {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--text-dim);
+      text-decoration: none; letter-spacing: 0.1em; padding: 6px 12px;
+      border: 1px solid transparent; transition: all 0.22s;
+    }
+    .f-links a:hover { color: var(--cyan); border-color: var(--border-c); background: var(--panel); }
+
+    /* FULLSCREEN HINT */
+    .fs-hint {
+      font-family: 'Share Tech Mono', monospace; font-size: 0.58rem;
+      color: var(--text-dim); letter-spacing: 0.15em;
+      display: flex; align-items: center; gap: 6px;
+      opacity: 0; animation: fu 0.7s 0.7s forwards;
+      margin-top: 8px; align-self: flex-end;
+    }
+    .fs-hint::before { content: '⤢'; color: var(--cyan); font-size: 0.8rem; }
+
+    @media(max-width:700px){
+      header { padding: 0 16px; }
+      main { padding: 80px 12px 40px; }
+      footer { padding: 18px 16px; }
+      .info-bar { flex-wrap: wrap; }
+      .ib-cell { min-width: 50%; border-bottom: 1px solid var(--border-c); }
+      .actions { flex-direction: column; align-items: flex-start; }
+      nav a { font-size: 0.68rem; padding: 6px 10px; }
+      .logo-name { font-size: 0.82rem; }
+      .hm { display: none; }
+      .top-meta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-chip">S&amp;G</div>
+      <div class="logo-name">STUKU <em>&amp;</em> GHICH</div>
+    </a>
+    <nav>
+      <a href="index.html" class="hm">HOME</a>
+      <a href="index.html#games" class="hm">GAMES</a>
+      <a href="index.html#about" class="hm">ABOUT</a>
+      <a href="play.html" class="active hm">PLAY</a>
+      <a href="feedback.html" class="cta">FEEDBACK</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- TOP META -->
+    <div class="top-meta">
+      <div class="meta-left">
+        <div class="meta-eyebrow">SURVIVAL HORROR &nbsp;·&nbsp; EXPLORATION &nbsp;·&nbsp; ANDROID</div>
+        <div class="meta-title">THE <span>FOREST WHISPER</span></div>
+      </div>
+      <div class="meta-right">
+        <div class="live-badge"><div class="live-dot"></div>PLAYABLE NOW</div>
+        <div class="genre-tag">BROWSER BUILD</div>
+      </div>
+    </div>
+
+    <!-- GAME PANEL -->
+    <div class="game-panel">
+      <div class="hc tl"></div><div class="hc tr"></div>
+      <div class="hc bl"></div><div class="hc br"></div>
+
+      <!-- panel bar -->
+      <div class="panel-bar">
+        <div class="bar-left">
+          <div class="bd bd-r"></div>
+          <div class="bd bd-y"></div>
+          <div class="bd bd-g"></div>
+          <span class="bar-file">the_forest_whisper.exe &nbsp;—&nbsp; RUNNING</span>
+        </div>
+        <div class="bar-right">
+          <span class="bar-stat">PLATFORM <span>BROWSER</span></span>
+          <span class="bar-stat">STUDIO <span>STUKU &amp; GHICH</span></span>
+        </div>
+      </div>
+
+      <!-- GAME EMBED -->
+      <div class="embed-wrap" id="embedWrap">
+        <div class="embed-hud-tl"></div>
+        <div class="embed-hud-tr"></div>
+        <div class="embed-hud-bl"></div>
+        <div class="embed-hud-br"></div>
+        <div class="embed-overlay"></div>
+        <iframe
+          id="gameFrame"
+          frameborder="0"
+          src="https://itch.io/embed-upload/17349132?color=1e6414"
+          allowfullscreen
+          width="740"
+          height="490"
+          title="The Forest Whisper — Play Online"
+        >
+          <a href="https://stukuandghich.itch.io/the-forest-whisper">Play The Forest Whisper on itch.io</a>
+        </iframe>
+      </div>
+
+      <!-- INFO BAR -->
+      <div class="info-bar">
+        <div class="ib-cell">
+          <div class="ib-label">Game</div>
+          <div class="ib-val">The Forest Whisper</div>
+        </div>
+        <div class="ib-cell">
+          <div class="ib-label">Studio</div>
+          <div class="ib-val">Stuku &amp; Ghich</div>
+        </div>
+        <div class="ib-cell">
+          <div class="ib-label">Genre</div>
+          <div class="ib-val mag">Horror / Survival</div>
+        </div>
+        <div class="ib-cell">
+          <div class="ib-label">Status</div>
+          <div class="ib-val grn">ONLINE</div>
+        </div>
+        <div class="ib-cell">
+          <div class="ib-label">Build</div>
+          <div class="ib-val">Prototype</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <div class="actions-left">
+        // Click inside the game to capture keyboard input &nbsp;·&nbsp;
+        <a href="https://stukuandghich.itch.io/the-forest-whisper" target="_blank">Open on itch.io ↗</a>
+      </div>
+      <div class="actions-right">
+        <a href="https://stukuandghich.itch.io/the-forest-whisper" target="_blank" class="act-btn primary">▶ OPEN ON ITCH.IO</a>
+      </div>
+    </div>
+
+    <div class="fs-hint">USE THE FULLSCREEN BUTTON IN-GAME FOR BEST EXPERIENCE</div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="f-inner">
+      <div>
+        <div class="f-name">STUKU <em>&amp;</em> GHICH</div>
+        <div class="f-copy">© 2026 STUKU &amp; GHICH GAMES. ALL RIGHTS RESERVED.</div>
+      </div>
+      <div class="f-links">
+        <a href="index.html">HOME</a>
+        <a href="feedback.html">FEEDBACK</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Responsively scale the iframe to fill panel width while keeping 740x490 ratio
+    const frame = document.getElementById('gameFrame');
+    const wrap  = document.getElementById('embedWrap');
+    const W = 740, H = 490;
+
+    function resize() {
+      const available = wrap.clientWidth;
+      if (available >= W) {
+        frame.style.width  = W + 'px';
+        frame.style.height = H + 'px';
+        wrap.style.height  = H + 'px';
+      } else {
+        const scale = available / W;
+        frame.style.width  = W + 'px';
+        frame.style.height = H + 'px';
+        frame.style.transform = `scale(${scale})`;
+        frame.style.transformOrigin = 'top left';
+        wrap.style.height = (H * scale) + 'px';
+        wrap.style.overflow = 'hidden';
+      }
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+  </script>
+</body>
+</html>
